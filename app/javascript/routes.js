@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 const routes = [
   // { path: '/', component: ()=>import("./app") },
   { path: '/', component: ()=>import("./parts/home") },
-  { path: '/home', component: ()=>import("./parts/home") },
+  { path: '/contact', component: ()=>import("./parts/contact") },
 ]
 
 // 3. Create the router instance and pass the `routes` option
