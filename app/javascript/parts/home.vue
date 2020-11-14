@@ -5,7 +5,7 @@
 <template>
   <div id="home">
     <p>Hello World</p>
-    asdf
+    <router-link to="/home">Home</router-link>
   </div>
 </template>
 
