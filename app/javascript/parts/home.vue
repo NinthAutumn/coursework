@@ -4,8 +4,7 @@
 
 <template>
   <div id="home">
-    <p>Hello World</p>
-    <router-link to="/home">Home</router-link>
+    <p>Welcome to the Car Park</p>
   </div>
 </template>
 

@@ -2,7 +2,7 @@
     <div class="horizontal-bar">
         <div class="horizontal-bar__content">
            <router-link tag="div" to="/" class="logo">
-                Music World
+                Car Park
            </router-link>
         </div>
     </div>  
