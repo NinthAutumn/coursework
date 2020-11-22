@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   # get 'pages/home'
+  namespace :api do
+    resources :parks
+    resources :users
+    resources :cars
+  end 
   root 'pages#home'
   get '/*path', to: 'pages#home'
+  
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

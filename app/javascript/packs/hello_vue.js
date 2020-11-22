@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // }
   }).$mount()
   document.body.appendChild(app.$el)
-
+  window.$ = require('jquery');
 })
 
 

@@ -6,8 +6,11 @@
 </template>
 
 <script>
-import VueRouter from 'vue-router'
+import VueRouter from "vue-router";
 export default {
- components:{VueRouter,HorizontalBar:()=>import('./layout/HorizontalBar')}
+  components: {
+    VueRouter,
+    HorizontalBar: () => import("./layout/HorizontalBar"),
+  },
 };
 </script>

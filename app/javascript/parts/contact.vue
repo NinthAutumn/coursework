@@ -1,37 +1,83 @@
 <template>
-<div class="contact">
-  <h1>Contact Us</h1>
-    <div class="contact-form">
-        <label for="subject">Subject</label>
-        <input type="text" name="subject" id="">
-        <label for="content">Content</label>
-        <textarea name="content" id="" cols="30" rows="10"></textarea>
-    </div>
-</div>
+  <div class="contact">
+    <form class="contact-form" @submit.prevent="actionHandler">
+      <h1>Contact Us</h1>
+      <label for="subject">Subject</label>
+      <input
+        placeholder="Subject"
+        type="text"
+        required
+        v-model="form.subject"
+        name="subject"
+        id=""
+      />
+      <label for="content">Content</label>
+      <textarea
+        placeholder="Content"
+        name="content"
+        id=""
+        cols="30"
+        required
+        rows="10"
+        v-model="form.content"
+      ></textarea>
+      <button type="submit" class="button button--primary">
+        {{ loading ? "Loading..." : "Submit" }}
+      </button>
+    </form>
+  </div>
 </template>
 
 <script>
 export default {
-
-}
+  data: () => ({
+    form: {
+      subject: "",
+      content: "",
+    },
+    loading: false,
+  }),
+  methods: {
+    async actionHandler() {
+      if (this.loading) return;
+      this.loading = true;
+      const data = await window.$.ajax(
+        `/${window.$.param(this.form)}`
+      ).promise();
+      this.loading = false;
+    },
+  },
+};
 </script>
 
 <style lang="scss">
-input {
-  height: 4rem;
-  font-size: 1.5rem;
-  width: 100%;
-  padding: 0 1.2rem;
-  border-radius: 0.5rem;
-  box-sizing: border-box;
-  background-color: white;
-    box-shadow: (rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-      rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-      rgba(60, 66, 87, 0.16) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-      rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px);
-  &:active,
-  &:focus {
-    border-radius: 0.5rem;
+.contact {
+  display: flex;
+  justify-content: center;
+  $self: &;
+}
+.contact-form {
+  animation: slideDown 300ms ease-in forwards;
+  // animation-fill-mode: forwards;
+  // -webkit-animation-fill-mode: forwards;
+
+  display: flex;
+  flex-direction: column;
+  max-width: 80rem;
+  width: 100rem;
+  background: white;
+  padding: 1rem;
+  z-index: 1;
+}
+input[type="submit"] {
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-25px);
+  }
+  to {
+    transform: translateY(0);
   }
 }
 </style>

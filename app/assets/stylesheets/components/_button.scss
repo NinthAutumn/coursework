@@ -1,0 +1,37 @@
+@import '../variable';
+
+.button {
+  width: 15rem;
+  align-self: flex-end;
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  padding: 1rem 1.2rem;
+
+  &--big {
+    padding: 1.5rem 2.5rem;
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+
+  &--primary {
+    background: $primary;
+    color: white;
+  }
+
+  &--pill {
+    border-radius: 50rem;
+  }
+
+  border-radius: 0.5rem;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
