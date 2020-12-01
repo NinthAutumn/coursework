@@ -4,13 +4,27 @@
 
 <template>
   <div id="home">
-    <p>Welcome to the Car Park</p>
+    <h1>Welcome to the Car Park Listing</h1>
+    <h3>Recent Parks</h3>
+    <park-list :parks="parks"> </park-list>
   </div>
 </template>
 
 <script>
-// import store from '@/store'
-export default {};
+import ParkList from "../components/ParkList";
+export default {
+  components: {
+    ParkList,
+  },
+  data: () => ({
+    parks: [],
+  }),
+  async mounted() {
+    this.parks = await window.$.ajax(
+      "/api/parks?limit=5&order_by=created_at"
+    ).promise();
+  },
+};
 </script>
 
 <style>

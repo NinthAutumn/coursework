@@ -7,17 +7,15 @@ module Api
     # GET /parks
     # GET /parks.json
     def index
-      parks = ActiveRecord::Base.connection.execute("PRAGMA table_info(parks);")
-      print parks
-      render :json => parks
+      parks = Park.all.limit(params[:limit]).order(params[:order_by])
+      render :json => parks.to_json()
     end
   
     # GET /parks/1
     # GET /parks/1.json
     def show
       # park = Park.joins(:user,park_slots: :car_park_slot).where(id:park_params[:id]).group(:id).first
-      park = Park.execute_sql("
-      select p.*,
+      park = Park.find_by_sql(["select p.*,
       json_object('id',u.id,'username',u.username,'email',u.email) as user,
       json_group_array(json_object('id',ps.id,'price',ps.price,'height',ps.height,'width',ps.width)) as park_slots,
        count(distinct ps.id)-count(distinct cps.car_id) as available_slot_count,
@@ -27,16 +25,20 @@ module Api
       inner join park_slots ps on ps.park_id = p.id
       left join car_park_slots cps on cps.park_slot_id = ps.id
       where p.id = ?
-      group by p.id
-      ",[park_params[:id]])
-      park = park[0]
+      group by p.id",park_params[:id]]).first
+      
+      # .execute_sql("
+     
+      # ",[park_params[:id]])
+      # render :json => park
+      # park = park[0]
       park['user'] = JSON.parse(park['user'])
       park['park_slots'] = JSON.parse(park['park_slots'])
     #  park.park_slots = JSON.parse(park.park_slots)
       # render :json => park.as_json(:include =>{:park_slots=>{:include=>:car_park_slot}})
         render :json => park
     end
-  
+
     # GET /parks/new
     def new
       @park = Park.new

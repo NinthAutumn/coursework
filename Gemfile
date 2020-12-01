@@ -9,8 +9,10 @@ gem 'webpacker', '>= 4.x'
 gem 'vueonrails'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
+gem 'knock'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
+gem 'rack-cors'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views

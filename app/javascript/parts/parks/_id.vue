@@ -1,10 +1,12 @@
 <template>
   <div class="park-show">
     <park-header :park="park"></park-header>
+    <park-body :park="park"></park-body>
   </div>
 </template>
 
 <script>
+import ParkBody from "../../components/ParkBody";
 export default {
   data: () => ({
     park: {
@@ -26,6 +28,7 @@ Fusce quis maximus sem, tempor commodo mauris. Etiam eget odio diam. Nulla luctu
   }),
   components: {
     ParkHeader: () => import("../../components/ParkHeader"),
+    ParkBody,
   },
   async mounted() {
     const res = await window.$.ajax(

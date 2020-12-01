@@ -9,7 +9,7 @@ class CreateParks < ActiveRecord::Migration[5.2]
       t.string :address_line_1
       t.string :address_line_2
       t.string :post_code
-      t.references :user
+      t.references :user, foreign_key: true
 
       t.timestamps
     end

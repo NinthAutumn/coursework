@@ -1,34 +1,30 @@
 module Api 
   class UsersController < ApplicationController
-    before_action :set_park, only: [:show, :edit, :update, :destroy]
+    before_action :authenticate_user,except: [:create]
     def show
-      user = User.findAll()
-      render :json=> user
+      user = User.find(params[:id])
+      render :json=> user.to_json()
     end
 
     def create
       user = User.new(user_params)
-  
-      respond_to do |format|
-        if user.save
-          format.html { redirect_to user, notice: 'Park was successfully created.' }
-          format.json { render :show, status: :created, location: user }
-        else
-          format.html { render :new }
-          format.json { render json: user.errors, status: :unprocessable_entity }
-        end
+      if user.save then
+        render :json => user
+      else 
+        render :json => {messages:user.errors.full_messages}, status: 409
       end
     end
 
     private
       # Use callbacks to share common setup or constraints between actions.
-      def set_user
-        @user = User.find(params[:id])
-      end
+      # def set_user
+      #   @user = User.find(params[:id])
+      # end
   
       # Only allow a list of trusted parameters through.
       def user_params
-        params.require(:user).permit(:username, :email,:password)
-      end
+        params.require(:user).permit(:username,:email, :password, :password_confirmation)
+      
+   end
   end
 end 

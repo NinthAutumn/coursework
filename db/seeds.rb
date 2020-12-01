@@ -21,11 +21,13 @@ require 'faker'
 
 users = []
 for i in 0..20 do
- user = User.create({
+ user = User.new({
     username: Faker::Internet.unique.username,
     email: Faker::Internet.unique.email,
-    password:BCrypt::Password.create("123456789")
+    password:"123456789",
+    password_confirmation:"123456789"
  })
+ user.save
  for i in 0..5 do
   car = Car.create({
     user_id:user.id,
