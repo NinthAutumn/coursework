@@ -8,6 +8,9 @@ module Api
     # GET /parks.json
     def index
       parks = Park.all.limit(params[:limit]).order(params[:order_by])
+      # parks[0] = nil
+      user = User.find_by_sql("select username from users where id = 1").first
+      puts nil&.id
       render :json => parks.to_json()
     end
   

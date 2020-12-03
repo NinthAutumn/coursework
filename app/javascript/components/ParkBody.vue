@@ -30,17 +30,26 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
-  ul {
-    list-style-type: none;
-  }
+
   &__content {
     width: 105rem;
     max-width: 100rem;
   }
   &__slots {
+    margin: 2rem 0;
+    overflow: hidden;
     list-style: none;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    border-radius: 0.5rem;
+    box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
+      0 18px 36px -18px rgba(0, 0, 0, 0.3);
+    .park-slot:nth-child(even) {
+      background: rgb(255, 255, 255);
+    }
+    .park-slot:nth-child(odd) {
+      background: #f0f3ff;
+    }
   }
 }
 </style>

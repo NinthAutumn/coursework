@@ -1,11 +1,11 @@
 <template>
   <div class="dialog dialog__container">
-    <div class="dialog__content">
+    <div class="dialog__content" v-click-outside="close">
       <div class="slot-farm">
         <div class="slot-farm__name">
-          {{ `${parkSlot.width}cm x ${parkSlot.height}cm` }}
+          {{ `${pslot.width}cm x ${pslot.height}cm` }}
         </div>
-        <div class="slot-farm__price">{{ `$${parkSlot.price}` }}</div>
+        <div class="slot-farm__price">{{ `$${pslot.price}` }}</div>
         <div class="flex-divider">
           <div
             class="slot-farm__button button button--small button--primary button--pill"
@@ -22,15 +22,32 @@
 <script>
 export default {
   props: {
+    data: () => ({
+      pslot: {},
+    }),
     parkSlot: {
       type: Object,
-      default: () => ({}),
+      default: () => ({
+        width: 100,
+        height: 100,
+        price: 14,
+      }),
     },
   },
   async mounted() {
-    if (this.parkSlot.id) {
-      console.log("SSS");
+    if (!this.parkSlot.id) {
+      this.pslot = await window.$.ajax(
+        `/api/slot/${this.$route.params.id}/open`
+      ).promise();
+    } else {
+      this.pslot = this.parkSlot;
     }
+  },
+  methods: {
+    close() {
+      this.$emit("close");
+    },
+    handleSlot() {},
   },
   // data: () => ({
   //   parkSlot: {

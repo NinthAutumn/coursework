@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :users
     resources :cars
     get '/slot/:id', to:"slots#show"
+    get '/slot/:park_id/open', to:"slots#availableSlot"
     # get '/users/:id',to:"users#show"
     
     scope '/auth' do

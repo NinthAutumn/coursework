@@ -28,13 +28,14 @@ export default {
 
 .park-slot {
   &--occupied {
-    background: $secondary;
+    background: $secondary !important;
     color: white;
   }
+
   user-select: none;
   cursor: pointer;
   &:hover {
-    background: $secondary;
+    background: $secondary !important;
     color: white;
   }
   font-size: 1.6rem;
