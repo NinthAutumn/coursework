@@ -12,10 +12,8 @@ const routes = [
   { path: '/parks/new', component: ()=>import("./parts/parks/new") },
   { path: '/parks/:id', component: ()=>import("./parts/parks/_id") },
   { path: '/parks/:id/update', component: ()=>import("./parts/parks/update") },
-  { path: '/users', component: ()=>import("./parts/users") },
-  { path: '/users/new', component: ()=>import("./parts/parks/new") },
-  { path: '/users/:id', component: ()=>import("./parts/parks/_id") },
-  { path: '/users/:id/update', component: ()=>import("./parts/parks/update") },
+  { path: '/auth/login', component: ()=>import("./parts/auth/login") },
+  { path: '/auth/signup', component: ()=>import("./parts/auth/signup") },
 ]
 
 // 3. Create the router instance and pass the `routes` option

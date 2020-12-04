@@ -1,5 +1,9 @@
 <template>
-  <div class="park-slot" :class="{ 'park-slot--occupied': car }">
+  <div
+    class="park-slot"
+    :class="{ 'park-slot--occupied': car }"
+    @click="$emit('formOpen', parkSlot)"
+  >
     {{
       car
         ? "Occupied"
@@ -16,6 +20,7 @@ export default {
   data: () => ({
     car: null,
   }),
+  methods: {},
   async mounted() {
     const res = await window.$.ajax(`/api/slot/${this.parkSlot.id}`).promise();
     this.car = res;

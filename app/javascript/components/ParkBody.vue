@@ -7,6 +7,7 @@
           :park-slot="slot"
           v-for="slot in park.park_slots"
           :key="slot.id"
+          @formOpen="handleSlot"
         ></park-slot>
       </ul>
     </div>
@@ -17,6 +18,11 @@
 export default {
   props: {
     park: Object,
+  },
+  methods: {
+    handleSlot(slot) {
+      this.$emit("formOpen", slot);
+    },
   },
   components: {
     ParkSlot: () => import("./ParkSlot"),

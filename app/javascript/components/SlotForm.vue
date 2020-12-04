@@ -21,10 +21,14 @@
 
 <script>
 export default {
+  data: () => ({
+    pslot: {
+      width: 100,
+      height: 100,
+      price: 14,
+    },
+  }),
   props: {
-    data: () => ({
-      pslot: {},
-    }),
     parkSlot: {
       type: Object,
       default: () => ({

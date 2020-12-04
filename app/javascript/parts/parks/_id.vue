@@ -1,14 +1,22 @@
 <template>
   <div class="park-show">
-    <park-header :park="park"></park-header>
-    <park-body :park="park"></park-body>
+    <park-header @formOpen="handleSlot" :park="park"></park-header>
+    <park-body @formOpen="handleSlot" :park="park"></park-body>
+    <slot-form
+      @close="handleSlot"
+      :park-slot="parkSlot"
+      v-if="form"
+    ></slot-form>
   </div>
 </template>
 
 <script>
 import ParkBody from "../../components/ParkBody";
+
 export default {
   data: () => ({
+    parkSlot: {},
+    form: false,
     park: {
       id: 1,
       name: "sadfasdfasf",
@@ -29,6 +37,13 @@ Fusce quis maximus sem, tempor commodo mauris. Etiam eget odio diam. Nulla luctu
   components: {
     ParkHeader: () => import("../../components/ParkHeader"),
     ParkBody,
+    SlotForm: () => import("../../components/SlotForm"),
+  },
+  methods: {
+    handleSlot(slot) {
+      this.form = !this.form;
+      this.parkSlot = slot;
+    },
   },
   async mounted() {
     const res = await window.$.ajax(
