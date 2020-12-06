@@ -10,13 +10,15 @@ module Api
       render :json => car.to_json()
     end
 
+    
+
     def availableSlot
       user = nil
       if request.headers["Authorization"] then
        user =  JWT.decode request.headers["Authorization"],split(' ')[0], nil, false
       end
       slot = nil
-      puts user.to_s
+
       slot = ParkSlot.find_by_sql(["
       select ps.*, cps.car_id as car_id
       from park_slots ps

@@ -22,7 +22,7 @@ export default {
   }),
   methods: {},
   async mounted() {
-    const res = await window.$.ajax(`/api/slot/${this.parkSlot.id}`).promise();
+    const res = await window.$.ajax(`/api/slots/${this.parkSlot.id}`).promise();
     this.car = res;
   },
 };

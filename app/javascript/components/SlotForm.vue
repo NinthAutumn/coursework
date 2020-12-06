@@ -41,7 +41,7 @@ export default {
   async mounted() {
     if (!this.parkSlot.id) {
       this.pslot = await window.$.ajax(
-        `/api/slot/${this.$route.params.id}/open`
+        `/api/slots/${this.$route.params.id}/open`
       ).promise();
     } else {
       this.pslot = this.parkSlot;
@@ -51,7 +51,9 @@ export default {
     close() {
       this.$emit("close");
     },
-    handleSlot() {},
+    async handleSlot() {
+      await window.$.ajax(`/api/slots/`);
+    },
   },
   // data: () => ({
   //   parkSlot: {

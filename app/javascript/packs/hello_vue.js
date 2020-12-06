@@ -10,9 +10,11 @@ import App from '../app.vue'
 import router from '../routes'
 import Route from '../plugins/router'
 import '../plugins/outside'
+import store from '../stores'
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
     render: h => h(App),
+    store,
     router,
     // components:{
       

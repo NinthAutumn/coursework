@@ -1,6 +1,11 @@
 module Api 
   class UsersController < ApplicationController
     before_action :authenticate_user,except: [:create]
+
+    def me
+      render :json => current_user
+    end
+
     def show
       user = User.find(params[:id])
       render :json=> user.to_json()

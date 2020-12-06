@@ -4,10 +4,11 @@ Rails.application.routes.draw do
     resources :parks
     resources :users
     resources :cars
-    get '/slot/:id', to:"slots#show"
-    get '/slot/:park_id/open', to:"slots#availableSlot"
+    get '/slots/:id', to:"slots#show"
+    get '/slots/:park_id/open', to:"slots#availableSlot"
+    get '/car/:user_id/list', to:"cars#user_car_list"
     # get '/users/:id',to:"users#show"
-    
+    get '/users/self/show', to:"users#me"
     scope '/auth' do
       post '/signup', to: "users#create"
       post '/login', to: "user_token#create"

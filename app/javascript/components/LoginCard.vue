@@ -1,31 +1,52 @@
 <template>
   <div class="login-card">
-    <card-style class="login-card__form">
-      <h1 class="login-card__title">Login</h1>
-      <label for>Username・Email</label>
-      <input-style
-        type="text"
-        theme="white"
-        placeholder="Password"
-      ></input-style>
-      <label for>Password</label>
-      <input-style
-        type="password"
-        theme="white"
-        placeholder="Password"
-      ></input-style>
-      <div class="flex-divider">
-        <button-card style="margin-left: auto">Login</button-card>
-      </div>
+    <form @submit.prevent="loginHandler">
+      <card-style class="login-card__form">
+        <h1 class="login-card__title">Login</h1>
+        <label for>Username・Email</label>
+        <input
+          v-model="form.email"
+          placeholder="Username・Email"
+          class="input"
+          type="text"
+        />
+        <label for>Password</label>
+        <input
+          class="input"
+          type="password"
+          v-model="form.password"
+          placeholder="Password"
+        />
+        <div class="flex-divider">
+          <button class="button button--primary button--round" type="submit">
+            Login
+          </button>
+          <!-- <button-card type="submit" style="margin-left: auto"
+            >Login</button-card -->
+        </div>
 
-      <p class="login-card__password-forgot">Forgot Password?</p>
-    </card-style>
+        <p class="login-card__password-forgot">Forgot Password?</p>
+      </card-style>
+    </form>
   </div>
 </template>
 <script >
 export default {
+  data: () => ({
+    form: {
+      email: "",
+      password: "",
+    },
+  }),
+  methods: {
+    async loginHandler(e) {
+      const { error } = await this.$store.dispatch("user/login", this.form);
+
+      console.log(error);
+    },
+  },
   components: {
-    ButtonCard: () => import("./Style/Button.vue"),
+    // ButtonCard: () => import("./Style/Button.vue"),
     CardStyle: () => import("./Style/Card.vue"),
     InputStyle: () => import("./Style/Input.vue"),
   },
@@ -45,6 +66,9 @@ export default {
     text-align: center;
   }
   .flex-divider {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     margin: 1rem 0;
   }
   &__password-forgot {
