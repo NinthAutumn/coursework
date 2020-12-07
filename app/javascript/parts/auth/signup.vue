@@ -1,7 +1,17 @@
-<template></template>
+<template>
+  <div class="signup">
+    <sign-card></sign-card>
+  </div>
+</template>
+
 
 <script>
-export default {};
+import SignCard from "../../components/SignCard";
+export default {
+  components: {
+    SignCard,
+  },
+};
 </script>
 
 <style lang="scss">

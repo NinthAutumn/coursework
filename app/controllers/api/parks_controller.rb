@@ -7,13 +7,15 @@ module Api
     # GET /parks
     # GET /parks.json
     def index
-      parks = Park.all.limit(params[:limit]).order(params[:order_by])
+      conditions = {}
+      if params[:user_id].present? then
+        conditions[:user_id] = params[:user_id] 
+      end
+      parks = Park.all.where(conditions).limit(params[:limit]).order(params[:order_by])
       # parks[0] = nil
-      user = User.find_by_sql("select username from users where id = 1").first
-      puts nil&.id
       render :json => parks.to_json()
     end
-  
+    
     # GET /parks/1
     # GET /parks/1.json
     def show
@@ -100,6 +102,10 @@ module Api
       # Only allow a list of trusted parameters through.
       def park_params
         params.permit(:id,:name, :description, :cover, :images, :avatar, :address_line_1, :address_line_2, :post_code)
+      end
+      
+      def park_list_params
+        params.permit(:user_id,:limit,:order_by)
       end
   end
   

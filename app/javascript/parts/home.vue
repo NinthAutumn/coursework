@@ -5,16 +5,27 @@
 <template>
   <div id="home">
     <h1>Welcome to the Car Park Listing</h1>
+    <user-parks v-if="auth"></user-parks>
     <h3>Recent Parks</h3>
+
     <park-list :parks="parks"> </park-list>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import ParkList from "../components/ParkList";
+import UserParks from "../components/UserParks";
 export default {
   components: {
     ParkList,
+    UserParks,
+  },
+  computed: {
+    ...mapGetters({
+      auth: "user/isAuth",
+      user: "user/getAuth",
+    }),
   },
   data: () => ({
     parks: [],

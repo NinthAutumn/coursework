@@ -11,7 +11,7 @@ const routes = [
   { path: '/parks', component: ()=>import("./parts/parks") },
   { path: '/parks/new', component: ()=>import("./parts/parks/new") },
   { path: '/parks/:id', component: ()=>import("./parts/parks/_id") },
-  { path: '/parks/:id/update', component: ()=>import("./parts/parks/update") },
+  { path: '/parks/:id/update', component: ()=>import("./parts/parks/_id/update") },
   { path: '/auth/login', component: ()=>import("./parts/auth/login") },
   { path: '/auth/signup', component: ()=>import("./parts/auth/signup") },
 ]

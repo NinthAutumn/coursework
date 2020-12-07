@@ -6,11 +6,18 @@
 </template>
 
 <script>
+import Cookies from "js-cookie";
+
 import VueRouter from "vue-router";
 export default {
   components: {
     VueRouter,
     HorizontalBar: () => import("./layout/HorizontalBar"),
+  },
+  async created() {
+    if (Cookies.get("Authorization")) {
+      await this.$store.dispatch("user/fetchUserSelf");
+    }
   },
 };
 </script>
