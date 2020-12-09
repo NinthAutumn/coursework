@@ -41,9 +41,10 @@ export default {
     async actionHandler() {
       if (this.loading) return;
       this.loading = true;
-      const data = await window.$.ajax(
-        `/${window.$.param(this.form)}`
-      ).promise();
+      const data = await window.$.ajax({
+        method: "POST",
+        url: `/api/pages/contact?${window.$.param(this.form)}`,
+      }).promise();
       this.loading = false;
     },
   },

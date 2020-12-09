@@ -4,10 +4,8 @@ one:
   name: MyString
   number_plate: MyString
   brand: MyString
-  references: 
 
 two:
   name: MyString
   number_plate: MyString
   brand: MyString
-  references: 

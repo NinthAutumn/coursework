@@ -7,8 +7,11 @@
     <h1>Welcome to the Car Park Listing</h1>
     <user-parks v-if="auth"></user-parks>
     <h3>Recent Parks</h3>
-
     <park-list :parks="parks"> </park-list>
+    <h3>Great Parks</h3>
+    <park-list :parks="oldest_parks"> </park-list>
+    <h3>Recommended Parks</h3>
+    <park-list :parks="oldest_parks"> </park-list>
   </div>
 </template>
 
@@ -29,10 +32,18 @@ export default {
   },
   data: () => ({
     parks: [],
+    oldest_parks: [],
+    rec: [],
   }),
   async mounted() {
     this.parks = await window.$.ajax(
       "/api/parks?limit=5&order_by=created_at"
+    ).promise();
+    this.oldest_parks = await window.$.ajax(
+      "/api/parks?limit=5&order_by=created_at desc"
+    ).promise();
+    this.rec = await window.$.ajax(
+      "/api/parks?limit=5&order_by=name desc"
     ).promise();
   },
 };

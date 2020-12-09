@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     resources :parks
     resources :users
     resources :cars
+    post '/contact',to:"pages#contact"
     get '/slots/:id', to:"slots#show"
     get '/slots/:park_id/open', to:"slots#availableSlot"
     get '/car/:user_id/list', to:"cars#user_car_list"

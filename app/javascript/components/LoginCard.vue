@@ -21,6 +21,7 @@
           <button class="button button--primary button--round" type="submit">
             Login
           </button>
+          <span v-if="error">{{ error }}</span>
           <!-- <button-card type="submit" style="margin-left: auto"
             >Login</button-card -->
         </div>
@@ -37,12 +38,13 @@ export default {
       email: "",
       password: "",
     },
+    error: false,
   }),
   methods: {
     async loginHandler(e) {
       const { error } = await this.$store.dispatch("user/login", this.form);
 
-      console.log(error);
+      if (error) return (this.error = error);
       return this.$router.push("/");
     },
   },
