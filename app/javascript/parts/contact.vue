@@ -43,7 +43,7 @@ export default {
       this.loading = true;
       const data = await window.$.ajax({
         method: "POST",
-        url: `/api/pages/contact?${window.$.param(this.form)}`,
+        url: `/contact?${window.$.param(this.form)}`,
       }).promise();
       this.loading = false;
     },

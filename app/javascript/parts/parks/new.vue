@@ -51,10 +51,14 @@ export default {
   computed: {
     ...mapGetters({
       park: "park/getPark",
+      user: "user/getAuth",
+      auth: "user/isAuth",
     }),
   },
   methods: {
     async parkHandler() {
+      if (!this.auth) return alert("You have to be logged in to Create Park");
+      this.form.user_id = this.user.id;
       await this.$store.dispatch("park/postPark", this.form);
       return this.$router.push(`/parks/${this.park.id}`);
     },

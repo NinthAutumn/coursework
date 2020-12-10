@@ -21,12 +21,18 @@ const actions = {
   async fetchUserSelf({
     commit
   }) {
-    let user = await $.ajax(`/api/users/self/show`, {
-      headers: {
-        Authorization: Cookies.get('Authorization')
-      }
-    }).promise();
-    commit('SET_AUTH', user);
+    try {
+      let user = await $.ajax(`/api/users/self/show`, {
+        headers: {
+          Authorization: Cookies.get('Authorization')
+        }
+      }).promise();
+      commit('SET_AUTH', user);
+    } catch (error) {
+      Cookies.remove('Authorization')
+      return
+    }
+
   },
   async login({
     commit
@@ -78,8 +84,8 @@ const actions = {
         url: "/api/auth/login",
         data: {
           auth: {
-            email: this.form.email,
-            password: this.form.password
+            email: form.email,
+            password: form.password
           }
         },
       }).promise()

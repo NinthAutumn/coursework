@@ -1,4 +1,6 @@
 import $ from 'jquery'
+import Cookies from 'js-cookie'
+
 const state = () => ({
   park: {},
   user_parks: [],
@@ -31,12 +33,37 @@ const actions = {
     const parks = await window.$.ajax(`/api/parks?user_id=${user_id}&limit=${limit}&page=${page}`).promise();
     commit('SET_USER_PARKS', parks)
   },
+  async patchPark({
+    commit
+  }, {
+    park,
+  }) {
+    try {
+      await window.$.ajax({
+        method: 'PATCH',
+        url: `/api/parks/${park.id}`,
+        data: park,
+        headers: {
+          Authorization: Cookies.get('Authorization')
+        }
+      }).promise();
+      return {
+        error: false
+      }
+    } catch (error) {
+      return {
+        error
+      }
+    }
+
+
+  },
   async postPark({
     commit
   }, form) {
     const park = await window.$.ajax({
       method: 'POST',
-      url: "/api/parks/new",
+      url: "/api/parks/create",
       data: {
         ...form
       },

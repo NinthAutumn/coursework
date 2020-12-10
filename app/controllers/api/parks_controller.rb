@@ -2,7 +2,7 @@ require 'json'
 
 module Api 
   class ParksController < ApplicationController
-    before_action :set_park, only: [:show, :edit, :update, :destroy]
+    before_action :authenticate_user, only: [:update,:destroy]
   
     # GET /parks
     # GET /parks.json
@@ -54,27 +54,19 @@ module Api
      
     end
 
-    # GET /parks/new
-    def new
-      @park = Park.new
-    end
   
     # GET /parks/1/edit
-    def edit
-    end
   
     # POST /parks
     # POST /parks.json
     def create
       @park = Park.new(park_params)
-  
+      
       respond_to do |format|
         if @park.save
-          format.html { redirect_to @park, notice: 'Park was successfully created.' }
-          format.json { render :show, status: :created, location: @park }
+          render :json => park
         else
-          format.html { render :new }
-          format.json { render json: @park.errors, status: :unprocessable_entity }
+          render :json => {messages:park.errors.full_messages}
         end
       end
     end
@@ -82,24 +74,40 @@ module Api
     # PATCH/PUT /parks/1
     # PATCH/PUT /parks/1.json
     def update
-      respond_to do |format|
-        if @park.update(park_params)
-          format.html { redirect_to @park, notice: 'Park was successfully updated.' }
-          format.json { render :show, status: :ok, location: @park }
-        else
-          format.html { render :edit }
-          format.json { render json: @park.errors, status: :unprocessable_entity }
+      park = Park.find(park_params[:id])
+      if current_user.id != park.user_id then
+        respond_to do |format|
+          format.json do
+            self.status = :unauthorized
+            self.response_body = { error: 'Access denied' }.to_json
+          end
         end
+      end
+      park_params.permit!
+      if park.update(park_params) then
+        render :json => park
+      else
+        render :json => {messages:park.errors.full_messages}
       end
     end
   
     # DELETE /parks/1
     # DELETE /parks/1.json
     def destroy
-      @park.destroy
-      respond_to do |format|
-        format.html { redirect_to parks_url, notice: 'Park was successfully destroyed.' }
-        format.json { head :no_content }
+
+      park = Park.find(params[:id])
+      if current_user.id != park.user_id then
+        respond_to do |format|
+          format.json do
+            self.status = :unauthorized
+            self.response_body = { error: 'Access denied' }.to_json
+          end
+        end
+      end
+      if park.destroy then
+        render :json => {message:"success"}
+      else
+        render :json => {messages:park.errors.full_messages}
       end
     end
   
@@ -111,7 +119,7 @@ module Api
   
       # Only allow a list of trusted parameters through.
       def park_params
-        params.permit(:id,:name, :description, :cover, :images, :avatar, :address_line_1, :address_line_2, :post_code)
+        params.permit(:id,:name, :description, :cover, :images, :avatar, :address_line_1, :address_line_2, :post_code,:user_id)
       end
       
       def park_list_params

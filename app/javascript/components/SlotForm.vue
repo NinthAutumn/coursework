@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data: () => ({
     pslot: {
@@ -38,6 +39,12 @@ export default {
       }),
     },
   },
+  computed: {
+    ...mapGetters({
+      auth: "user/isAuth",
+      user: "auth/getAuth",
+    }),
+  },
   async mounted() {
     if (!this.parkSlot.id) {
       this.pslot = await window.$.ajax(
@@ -52,6 +59,7 @@ export default {
       this.$emit("close");
     },
     async handleSlot() {
+      if (!this.auth) return alert("You must be logged in to occupy");
       await window.$.ajax(`/api/slots/`);
     },
   },

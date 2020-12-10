@@ -18,6 +18,16 @@
     color: white;
   }
 
+  &--error {
+    background: $error;
+    color: white;
+  }
+
+  &--secondary {
+    background: $secondary;
+    color: white;
+  }
+
   &--pill {
     border-radius: 50rem;
   }

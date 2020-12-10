@@ -11,7 +11,7 @@
     <h3>Great Parks</h3>
     <park-list :parks="oldest_parks"> </park-list>
     <h3>Recommended Parks</h3>
-    <park-list :parks="oldest_parks"> </park-list>
+    <park-list :parks="rec"> </park-list>
   </div>
 </template>
 
