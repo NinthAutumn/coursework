@@ -12,21 +12,38 @@
           @click="closeModal"
         >
           Cancel</button
-        ><button class="button button--primary">Delete</button>
+        ><button @click="deleteHandler" class="button button--primary">
+          Delete
+        </button>
       </div>
     </div>
   </div>
 </template>
  
 <script>
+import Cookie from "js-cookie";
+import { mapGetters } from "vuex";
 export default {
   props: ["id"],
+  computed: {
+    ...mapGetters({
+      user: "user/getAuth",
+    }),
+  },
   methods: {
     async deleteHandler() {
       await window.$.ajax({
         method: "DELETE",
-        url: `/${this.id}`,
+        url: `/api/parks/${this.id}`,
+        headers: {
+          Authorization: Cookie.get("Authorization"),
+        },
       }).promise();
+
+      await this.$store.dispatch("park/fetchUserParks", {
+        user_id: this.user.id,
+      });
+      this.closeModal();
     },
     closeModal() {
       this.$emit("close");

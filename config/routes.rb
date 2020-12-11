@@ -3,10 +3,10 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     get '/slots/:id', to:"slots#show"
     get '/slots/:park_id/open', to:"slots#availableSlot"
-    get '/car/:user_id/list', to:"cars#user_car_list"
+    post '/slots',to:"slots#create"
+    get '/cars/:user_id/list', to:"cars#user_car_list"
     # get '/users/:id',to:"users#show"
     get '/users/self/show', to:"users#me"
-    post "/parks/create", to:"parks#create"
     resources :parks
     resources :users
     resources :cars

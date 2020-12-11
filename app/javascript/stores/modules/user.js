@@ -3,19 +3,22 @@ import $ from 'jquery'
 // const $ = require('jquery');
 const state = () => ({
   auth: {},
-  loggedIn: false
+  loggedIn: false,
+  user: {}
 })
 
 const getters = {
   isAuth: state => state.loggedIn,
-  getAuth: state => state.auth
+  getAuth: state => state.auth,
+  getUser: state => state.user
 }
 
 const mutations = {
   SET_AUTH(state, data) {
     state.auth = data;
     state.loggedIn = true;
-  }
+  },
+  SET_USER: (state, user) => state.user = user
 }
 const actions = {
   async fetchUserSelf({
@@ -100,6 +103,16 @@ const actions = {
       return {
         error
       }
+    }
+  },
+  async fetchUser({
+    commit
+  }, id) {
+    try {
+      const user = await $.ajax(`/api/users/${id}`).promise();
+      commit('SET_USER', user)
+    } catch (error) {
+
     }
   }
 }

@@ -7,16 +7,22 @@
         <router-link to="/auth/signup" class="signup"> Sign Up </router-link>
         <router-link to="/auth/login" class="login"> Login </router-link>
       </div>
-      <div v-else style="display: flex; align-items: center">
-        <img
-          class="avatar"
-          src="/assets/avatar.png"
-          height="30"
-          width="30"
-          alt="user avatar"
-          style="margin-right: 1rem"
-        />
-        <p>{{ user.username }}</p>
+      <div v-else>
+        <router-link
+          :to="`/users/${user.id}`"
+          tag="div"
+          style="display: flex; align-items: center; cursor: pointer"
+        >
+          <img
+            class="avatar"
+            src="/assets/avatar.png"
+            height="30"
+            width="30"
+            alt="user avatar"
+            style="margin-right: 1rem"
+          />
+          <p>{{ user.username }}</p>
+        </router-link>
       </div>
     </div>
   </div>

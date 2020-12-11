@@ -2,7 +2,7 @@ require 'json'
 
 module Api 
   class ParksController < ApplicationController
-    before_action :authenticate_user, only: [:update,:destroy]
+    before_action :authenticate_user, only: [:update,:destroy,:create]
   
     # GET /parks
     # GET /parks.json
@@ -35,7 +35,7 @@ module Api
          count(distinct ps.id) as total_slot_count
         from parks p
         inner join users u on u.id = p.user_id
-        inner join park_slots ps on ps.park_id = p.id
+        left join park_slots ps on ps.park_id = p.id
         left join car_park_slots cps on cps.park_slot_id = ps.id
         where p.id = ?
         group by p.id",park_params[:id]]).first
@@ -60,14 +60,11 @@ module Api
     # POST /parks
     # POST /parks.json
     def create
-      @park = Park.new(park_params)
-      
-      respond_to do |format|
-        if @park.save
-          render :json => park
-        else
-          render :json => {messages:park.errors.full_messages}
-        end
+      park = Park.new(park_params)
+      if park.save
+        render :json => park
+      else
+        render :json => {messages:park.errors.full_messages}
       end
     end
   
@@ -83,7 +80,6 @@ module Api
           end
         end
       end
-      park_params.permit!
       if park.update(park_params) then
         render :json => park
       else
@@ -95,15 +91,15 @@ module Api
     # DELETE /parks/1.json
     def destroy
 
-      park = Park.find(params[:id])
-      if current_user.id != park.user_id then
-        respond_to do |format|
-          format.json do
-            self.status = :unauthorized
-            self.response_body = { error: 'Access denied' }.to_json
-          end
-        end
-      end
+      park = Park.find(park_params[:id])
+      # if current_user.id != park.user_id then
+      #   respond_to do |format|
+      #     format.json do
+      #       self.status = :unauthorized
+      #       self.response_body = { error: 'Access denied' }.to_json
+      #     end
+      #   end
+      # end
       if park.destroy then
         render :json => {message:"success"}
       else
@@ -116,7 +112,7 @@ module Api
       def set_park
         @park = Park.find(params[:id])
       end
-  
+
       # Only allow a list of trusted parameters through.
       def park_params
         params.permit(:id,:name, :description, :cover, :images, :avatar, :address_line_1, :address_line_2, :post_code,:user_id)

@@ -63,7 +63,7 @@ const actions = {
   }, form) {
     const park = await window.$.ajax({
       method: 'POST',
-      url: "/api/parks/create",
+      url: "/api/parks/",
       data: {
         ...form
       },

@@ -50,6 +50,7 @@
       v-if="modal"
       :update="slot_form.update"
       :pslot="slot_form.pslot"
+      @addSlot="addSlot"
     ></slot-modal>
   </div>
 </template>
@@ -82,6 +83,9 @@ export default {
     }),
   },
   methods: {
+    addSlot(slot) {
+      this.form.park_slots.push(slot);
+    },
     slotModalHandler(form) {
       this.slot_form = form;
       this.modal = !this.modal;

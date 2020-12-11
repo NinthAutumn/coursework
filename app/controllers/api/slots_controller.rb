@@ -3,6 +3,7 @@ require 'jwt'
 module Api
   class SlotsController < ApplicationController
     # before_action :authenticate_user,only: [:availableSlot]
+    before_action :authenticate_user, only: [:update,:destroy,:create]
     def show
       car = CarParkSlot.where(park_slot_id: params[:id]).first
       # car = car[0] 
@@ -10,7 +11,14 @@ module Api
       render :json => car.to_json()
     end
 
-    
+    def create
+      slot = ParkSlot.new(slot_params)
+      if slot.save
+        render :json => slot
+      else
+        render :json => {messages:slot.errors.full_messages}
+      end
+    end
 
     def availableSlot
       user = nil
@@ -36,5 +44,11 @@ module Api
       # end
       render :json=> slot.to_json()
     end
+
+    private
+      def slot_params
+        params.permit(:id,:height,:width,:price,:park_id)
+      end
   end
+
 end
