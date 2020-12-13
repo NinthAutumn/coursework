@@ -137,7 +137,7 @@ class ParksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "Should success with limit for Park List" do 
+  test "Should Fail with limit for Park List" do 
 
     get "/api/parks",xhr:true,params:{:order_by=>10}
     assert_response :error
