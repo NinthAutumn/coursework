@@ -28,17 +28,20 @@ module Api
          end
         render :json => park.as_json(:include =>{:park_slots=>{}})
       else
-        park = Park.find_by_sql(["select p.*,
-        json_object('id',u.id,'username',u.username,'email',u.email) as user,
-        json_group_array(json_object('id',ps.id,'price',ps.price,'height',ps.height,'width',ps.width)) as park_slots,
-         count(distinct ps.id)- count( cps.car_id) as available_slot_count,
-         count(distinct ps.id) as total_slot_count
-        from parks p
-        left join users u on u.id = p.user_id
-        left join park_slots ps on ps.park_id = p.id
-        left join car_park_slots cps on cps.park_slot_id = ps.id
-        where p.id = ?
-        group by p.id",park_params[:id]]).first
+        park = Park.joins(" left join users u on u.id = parks.user_id
+        left join park_slots ps on ps.park_id = parks.id
+        left join car_park_slots cps on cps.park_slot_id = ps.id")
+        .select("parks.*, count(distinct ps.id)- count( cps.car_id) as available_slot_count,
+        count(distinct ps.id) as total_slot_count").group("parks.id").first
+        # park = Park.find_by_sql(["select p.*,
+        # json_object('id',u.id,'username',u.username,'email',u.email) as user,
+        # json_group_array(json_object('id',ps.id,'price',ps.price,'height',ps.height,'width',ps.width)) as park_slots,
+        #  count(distinct ps.id)- count( cps.car_id) as available_slot_count,
+        #  count(distinct ps.id) as total_slot_count
+        # from parks p
+       
+        # where p.id = ?
+        # group by p.id",park_params[:id]]).first
         
         # .execute_sql("
        if !park
@@ -48,11 +51,11 @@ module Api
         # render :json => park
         # park = park[0]
 
-        park['user'] = JSON.parse(park['user'])
-        park['park_slots'] = JSON.parse(park['park_slots'])
+        # park['user'] = JSON.parse(park['user'])
+        # park['park_slots'] = JSON.parse(park['park_slots'])
         #park.park_slots = JSON.parse(park.park_slots)
         # render :json => park.as_json(:include =>{:park_slots=>{:include=>:car_park_slot}})
-        render :json => park
+        render :json => park.as_json(:include =>{:park_slots=>{:include=>:car_park_slot}})
       end
      
     end

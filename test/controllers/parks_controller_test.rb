@@ -6,55 +6,33 @@ class ParksControllerTest < ActionDispatch::IntegrationTest
     @user = users(:one)
   end
 
-  # test "should get index" do
-  #   get parks_url
-  #   assert_response :success
-  # end
-
-  # test "should get new" do
-  #   get new_park_url
-  #   assert_response :success
-  # end
-
   test "should create park" do
-    # auth = post '/api/auth/login',params:{email:@user.email,password:'1234567'}
     sign_in()
     assert_difference('Park.count') do
       post '/api/parks', params: { user_id:@user.id,address_line_1: "asdf", address_line_2: "adsf", avatar: "@park.avatar", cover: "@park.cover", description: "@park.description", images: "@park.images", name: "@park.name", post_code: "@park.post_code" },headers: {'Authorization' => @env},xhr:true
-      # puts @response.body
     end
 
     assert_response :success
-    # assert_redirected_to park_url(Park.last)
   end
 
   test "should not create park when not logged in " do
-    # auth = post '/api/auth/login',params:{email:@user.email,password:'1234567'}
-    # sign_in()
     assert_no_difference('Park.count') do
       post '/api/parks', params: { user_id:@user.id,address_line_1: "asdf", address_line_2: "adsf", avatar: "@park.avatar", cover: "@park.cover", description: @park.description, images: @park.images, name: @park.name, post_code: @park.post_code },xhr:true
-      # puts @response.body
     end
     assert_response 401
-    # assert_redirected_to park_url(Park.last)
   end
 
   test "should not update park when not logged in " do
-    # auth = post '/api/auth/login',params:{email:@user.email,password:'1234567'}
     sign_in()
     @park.name = "asdfasdf"
     patch "/api/parks/#{@park.id}", params: @park.to_json,xhr:true
-      # puts @response.body
-  
     assert_response 401
-    # assert_redirected_to park_url(Park.last)
   end
 
   test "should  not update park when  logged in user is different from park creator " do
     sign_in()
     @park.name = "dog"
     patch "/api/parks/#{@park.id}", params: @park.to_json,xhr:true,headers: {'Authorization' => @env}
-  
     assert_response 401
   end
 
@@ -75,8 +53,6 @@ class ParksControllerTest < ActionDispatch::IntegrationTest
     patch "/api/parks/#{park.id}", params: park.to_json,xhr:true,headers: {'Authorization' => @env}  
     assert_response 200
   end
-
-
   test "should destroy park" do
     sign_in()
     park = Park.create({
@@ -97,7 +73,6 @@ class ParksControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
   end
-
   test "should not destroy park when not logged in" do
     # sign_in()
     park = Park.create({
