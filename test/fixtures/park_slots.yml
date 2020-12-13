@@ -11,3 +11,9 @@ two:
   height: 1.5
   width: 1.5
   price: 1.5
+
+three:
+  park: two
+  height: 1.5
+  width: 1.5
+  price: 1.5

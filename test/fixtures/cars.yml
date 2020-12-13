@@ -9,3 +9,8 @@ two:
   name: MyString
   number_plate: MyString
   brand: MyString
+
+three:
+  name: MyString
+  number_plate: MyString
+  brand: MyString

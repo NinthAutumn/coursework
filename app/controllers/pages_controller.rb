@@ -4,6 +4,14 @@ class PagesController < ApplicationController
 
   def contact
     # ContactMailer.contact_mail
-    ContactMailer.with(params).contact_email
+    # if
+    ContactMailer.with(contact_param).contact_email
   end
+
+  private
+    def contact_param
+      params.require(:content)
+      params.require(:subject)
+    end
+  
 end

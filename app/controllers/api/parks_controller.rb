@@ -8,17 +8,14 @@ module Api
     # GET /parks.json
     def index
       conditions = {}
-      if params[:user_id].present? then
-        conditions[:user_id] = params[:user_id] 
+      if park_list_params[:user_id].present? then
+        conditions[:user_id] = park_list_params[:user_id] 
       end
-      parks = Park.all.where(conditions).limit(params[:limit]).order(params[:order_by])
+      parks = Park.all.where(conditions).limit(park_list_params[:limit]).order(park_list_params[:order_by])
       # parks[0] = nil
       render :json => parks.to_json()
     end
     
-    def show_simple
-      
-    end
 
     # GET /parks/1
     # GET /parks/1.json
@@ -26,6 +23,9 @@ module Api
       # park = Park.joins(:user,park_slots: :car_park_slot).where(id:park_params[:id]).group(:id).first
       if params[:simple] then
         park = Park.find(params[:id])
+        if !park
+          return render :json =>{message:"Park Not Found"}, :status=>404
+         end
         render :json => park.as_json(:include =>{:park_slots=>{}})
       else
         park = Park.find_by_sql(["select p.*,
@@ -34,17 +34,20 @@ module Api
          count(distinct ps.id)- count( cps.car_id) as available_slot_count,
          count(distinct ps.id) as total_slot_count
         from parks p
-        inner join users u on u.id = p.user_id
+        left join users u on u.id = p.user_id
         left join park_slots ps on ps.park_id = p.id
         left join car_park_slots cps on cps.park_slot_id = ps.id
         where p.id = ?
         group by p.id",park_params[:id]]).first
         
         # .execute_sql("
-       
+       if !park
+        return render :json =>{message:"Park Not Found"}, :status=>404
+       end
         # ",[park_params[:id]])
         # render :json => park
         # park = park[0]
+
         park['user'] = JSON.parse(park['user'])
         park['park_slots'] = JSON.parse(park['park_slots'])
         #park.park_slots = JSON.parse(park.park_slots)
@@ -73,17 +76,12 @@ module Api
     def update
       park = Park.find(park_params[:id])
       if current_user.id != park.user_id then
-        respond_to do |format|
-          format.json do
-            self.status = :unauthorized
-            self.response_body = { error: 'Access denied' }.to_json
-          end
-        end
+       return render :json => { error: 'Access denied' }.to_json, :status=> :unauthorized
       end
       if park.update(park_params) then
         render :json => park
       else
-        render :json => {messages:park.errors.full_messages}
+        render :json => {messages:park.errors.full_messages}.to_json
       end
     end
   
@@ -92,14 +90,9 @@ module Api
     def destroy
 
       park = Park.find(park_params[:id])
-      # if current_user.id != park.user_id then
-      #   respond_to do |format|
-      #     format.json do
-      #       self.status = :unauthorized
-      #       self.response_body = { error: 'Access denied' }.to_json
-      #     end
-      #   end
-      # end
+      if current_user.id != park.user_id then
+        return render :json => { error: 'Access denied' }.to_json, :status=> :unauthorized
+       end
       if park.destroy then
         render :json => {message:"success"}
       else
@@ -113,13 +106,15 @@ module Api
         @park = Park.find(params[:id])
       end
 
+      
+
       # Only allow a list of trusted parameters through.
       def park_params
         params.permit(:id,:name, :description, :cover, :images, :avatar, :address_line_1, :address_line_2, :post_code,:user_id)
       end
       
       def park_list_params
-        params.permit(:user_id,:limit,:order_by)
+        params.permit(:user_id,:order_by,:limit)
       end
   end
   
