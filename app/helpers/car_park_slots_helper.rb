@@ -1,0 +1,2 @@
+module CarParkSlotsHelper
+end

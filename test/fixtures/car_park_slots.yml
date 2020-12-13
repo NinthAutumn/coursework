@@ -3,11 +3,7 @@
 one:
   park_slot: one
   car: one
-  from_date: 2020-11-21 02:17:28
-  until_date: 2020-11-21 02:17:28
 
 two:
   park_slot: two
   car: two
-  from_date: 2020-11-21 02:17:28
-  until_date: 2020-11-21 02:17:28

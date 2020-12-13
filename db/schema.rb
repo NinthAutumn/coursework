@@ -15,8 +15,6 @@ ActiveRecord::Schema.define(version: 2020_11_21_021728) do
   create_table "car_park_slots", force: :cascade do |t|
     t.integer "park_slot_id"
     t.integer "car_id"
-    t.datetime "from_date"
-    t.datetime "until_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["car_id"], name: "index_car_park_slots_on_car_id"

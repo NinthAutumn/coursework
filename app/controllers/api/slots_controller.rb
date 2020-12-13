@@ -44,7 +44,6 @@ module Api
       # end
       render :json=> slot.to_json()
     end
-
     private
       def slot_params
         params.permit(:id,:height,:width,:price,:park_id)

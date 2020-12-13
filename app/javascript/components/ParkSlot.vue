@@ -2,7 +2,7 @@
   <div
     class="park-slot"
     :class="{ 'park-slot--occupied': car }"
-    @click="$emit('formOpen', parkSlot)"
+    @click="car ? nothing : $emit('formOpen', parkSlot)"
   >
     {{
       car
@@ -20,7 +20,9 @@ export default {
   data: () => ({
     car: null,
   }),
-  methods: {},
+  methods: {
+    nothing() {},
+  },
   async mounted() {
     const res = await window.$.ajax(`/api/slots/${this.parkSlot.id}`).promise();
     this.car = res;

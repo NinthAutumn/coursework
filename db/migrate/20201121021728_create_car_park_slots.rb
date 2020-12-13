@@ -3,8 +3,6 @@ class CreateCarParkSlots < ActiveRecord::Migration[5.2]
     create_table :car_park_slots do |t|
       t.references :park_slot, foreign_key: true
       t.references :car, foreign_key: true
-      t.timestamp :from_date
-      t.timestamp :until_date
       t.index [:park_slot_id, :car_id], unique: true
       t.timestamps
     end

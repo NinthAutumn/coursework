@@ -31,7 +31,7 @@ module Api
         park = Park.find_by_sql(["select p.*,
         json_object('id',u.id,'username',u.username,'email',u.email) as user,
         json_group_array(json_object('id',ps.id,'price',ps.price,'height',ps.height,'width',ps.width)) as park_slots,
-         count(distinct ps.id)-count(distinct cps.car_id) as available_slot_count,
+         count(distinct ps.id)- count( cps.car_id) as available_slot_count,
          count(distinct ps.id) as total_slot_count
         from parks p
         inner join users u on u.id = p.user_id

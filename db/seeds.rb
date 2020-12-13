@@ -56,9 +56,7 @@ for i in 0..20 do
     if i == 5 then
       CarParkSlot.create({
         park_slot_id: slot.id,
-        car_id: car.id,
-        from_date: Time.now,
-        until_date: Time.now + 1.weeks
+        car_id: car.id
       })
     end 
   end

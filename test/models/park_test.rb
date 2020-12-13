@@ -6,7 +6,9 @@ class ParkTest < ActiveSupport::TestCase
     @user = users(:one)
   end
 
-  test "the truth" do
+
+  
+  test "Must Create Park" do
     park = Park.new
     park.name = "adfasdf"
     park.description="asfsdfsdf"
