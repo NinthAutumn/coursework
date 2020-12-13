@@ -11,12 +11,22 @@ module Api
       render :json => car.to_json()
     end
 
+
     def create
       slot = ParkSlot.new(slot_params)
       if slot.save
         render :json => slot
       else
         render :json => {messages:slot.errors.full_messages}
+      end
+    end
+
+    def update  
+      slot = ParkSlot.find(slot_params[:id])
+      if slot.update(slot_params) then
+        render :json => park
+      else
+        render :json => {messages:park.errors.full_messages}.to_json
       end
     end
 

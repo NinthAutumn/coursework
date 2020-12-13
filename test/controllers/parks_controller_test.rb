@@ -51,7 +51,7 @@ class ParksControllerTest < ActionDispatch::IntegrationTest
     })
     park.name = "dog"
     patch "/api/parks/#{park.id}", params: park.to_json,xhr:true,headers: {'Authorization' => @env}  
-    assert_response 200
+    assert_response :success
   end
   test "should destroy park" do
     sign_in()
