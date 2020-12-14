@@ -19,6 +19,7 @@ module Api
       render :json=> user.to_json()
     end
 
+    #POST /api/auth/signup
     def create
       
       user = User.new(user_params)
