@@ -53,6 +53,7 @@ class ParksControllerTest < ActionDispatch::IntegrationTest
     patch "/api/parks/#{park.id}", params: park.to_json,xhr:true,headers: {'Authorization' => @env}  
     assert_response :success
   end
+  
   test "should destroy park" do
     sign_in()
     park = Park.create({
@@ -73,6 +74,7 @@ class ParksControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
   end
+
   test "should not destroy park when not logged in" do
     # sign_in()
     park = Park.create({
@@ -97,58 +99,20 @@ class ParksControllerTest < ActionDispatch::IntegrationTest
   test "Should get Park" do 
     get "/api/parks/#{@park.id}",xhr:true
     assert_response :success
+    assert_equal @park.id, JSON.parse(@response.body)['id']
   end
 
   
 
   test "Should not get Park" do 
-    get "/api/parks/123434",xhr:true
+    get "/api/parks/1212343434",xhr:true
     assert_response 404
   end
 
   test "Should success with limit for Park List" do 
-
     get "/api/parks",xhr:true,params:{:limit=>10}
     assert_response :success
   end
-
-  test "Should Fail with limit for Park List" do 
-
-    get "/api/parks",xhr:true,params:{:order_by=>10}
-    assert_response :error
-  end
-
-
-  # test "Should rais exception without limit for Park List" do 
-
-  #   get "/api/parks",xhr:true
-  #   # assert_response :error
-  # end
-
-  # test "should not create park when not logged in " do
-  #   # auth = post '/api/auth/login',params:{email:@user.email,password:'1234567'}
-  #   sign_in()
-  #   assert_no_difference('Park.count') do
-  #     post '/api/parks', params: { user_id:@user.id,address_line_1: "asdf", address_line_2: "adsf", avatar: "@park.avatar", cover: "@park.cover", description: "@park.description", images: "@park.images", name: "@park.name", post_code: "@park.post_code" },headers: {'Authorization' => @env},xhr:true
-  #     # puts @response.body
-  #   end
-  #   # assert_redirected_to park_url(Park.last)
-  # end
-
-  # test "should show park" do
-  #   get park_url(@park)
-  #   assert_response :success
-  # end
-
-  # test "should get edit" do
-  #   get edit_park_url(@park)
-  #   assert_response :success
-  # end
-
-  # test "should update park" do
-  #   patch park_url(@park), params: { park: { address_line_1: @park.address_line_1, address_line_2: @park.address_line_2, avatar: @park.avatar, cover: @park.cover, description: @park.description, images: @park.images, name: @park.name, post_code: @park.post_code } }
-  #   assert_redirected_to park_url(@park)
-  # end
 
 
 end

@@ -36,6 +36,7 @@ export default {
     rec: [],
   }),
   async mounted() {
+    //call on all the necessary park list with different ordering
     this.parks = await window.$.ajax(
       "/api/parks?limit=5&order_by=created_at"
     ).promise();

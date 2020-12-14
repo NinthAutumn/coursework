@@ -1,5 +1,8 @@
 module Api
   class CarParkSlotsController < ApplicationController
+    before_action :authenticate_user, only: [:create]
+
+    # POST /car_parks_slots
     def create
       car_park_slot = CarParkSlot.new(occupy_params)
       if car_park_slot.save

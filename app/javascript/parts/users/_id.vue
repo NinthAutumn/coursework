@@ -19,6 +19,7 @@
         </div>
         <h3>Car List</h3>
         <div class="user-show__cars">
+          <!-- list of cars and when the car is selected toggle a modal that is able to edit it -->
           <div
             @click="toggleUpdateModal(car)"
             class="user-show__car"
@@ -33,13 +34,13 @@
               style="cursor: pointer"
               width="100"
               height="100"
-              alt=""
               @click.stop="toggleModal"
             />
           </div>
         </div>
       </card-style>
     </div>
+    <!-- a form that takes in update,car props only visible when car_modal is toggled -->
     <car-form
       :update="update_car"
       :car="current_car"
@@ -77,10 +78,12 @@ export default {
       this.car_modal = !this.car_modal;
     },
     addCar(car) {
+      // when the car is added push it to the cars list to show reactive change to the user
       this.cars.push(car);
     },
   },
   async mounted() {
+    //call on all necessary items
     this.cars = await window.$.ajax(
       `/api/cars/${this.$route.params.id}/list`
     ).promise();

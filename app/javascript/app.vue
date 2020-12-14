@@ -15,6 +15,7 @@ export default {
     HorizontalBar: () => import("./layout/HorizontalBar"),
   },
   async created() {
+    //when the app start check if there is cookie and add authenticate user
     if (Cookies.get("Authorization")) {
       await this.$store.dispatch("user/fetchUserSelf");
     }

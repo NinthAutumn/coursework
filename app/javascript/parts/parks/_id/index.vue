@@ -44,7 +44,7 @@ export default {
 
 <style lang="scss">
 .park-show {
-  margin: 0 -1rem;
+  // margin: 0 -1rem;
   box-sizing: border-box;
 }
 </style>

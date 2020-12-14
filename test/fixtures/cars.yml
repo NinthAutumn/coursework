@@ -4,13 +4,16 @@ one:
   name: MyString
   number_plate: MyString
   brand: MyString
+  user: one
 
 two:
   name: MyString
   number_plate: MyString
   brand: MyString
+  user: two
 
 three:
   name: MyString
   number_plate: MyString
   brand: MyString
+  user: one

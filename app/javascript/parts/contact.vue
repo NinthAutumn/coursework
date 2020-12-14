@@ -7,15 +7,15 @@
         placeholder="Subject"
         type="text"
         required
+        maxlength="50"
         v-model="form.subject"
         name="subject"
-        id=""
       />
       <label for="content">Content</label>
       <textarea
         placeholder="Content"
         name="content"
-        id=""
+        maxlength="400"
         cols="30"
         required
         rows="10"
@@ -39,13 +39,16 @@ export default {
   }),
   methods: {
     async actionHandler() {
+      // if loading retun to prevent duplicate while loading
       if (this.loading) return;
       this.loading = true;
+      //make an ajax request that posts content
       const data = await window.$.ajax({
         method: "POST",
         url: `/contact?${window.$.param(this.form)}`,
       }).promise();
       this.loading = false;
+      this.form = {};
     },
   },
 };

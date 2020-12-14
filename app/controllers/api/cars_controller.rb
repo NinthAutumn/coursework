@@ -1,9 +1,10 @@
 
 module Api
   class CarsController < ApplicationController
+
     before_action :authenticate_user, only: [:update,:destroy,:create]
-    # GET /cars
-    # GET /cars.json
+
+    #GET /cars/:user_id/list
     def user_car_list
       car = Car.all.where(user_id: params[:user_id])
       render :json => car.to_json
@@ -25,7 +26,7 @@ module Api
     def update
       car = Car.find(car_params[:id])
       if car.update(car_params)
-        render :json => car
+        render :json => car.to_json
       else
         render :json => {messages:car.errors.full_messages}
       end

@@ -3,11 +3,13 @@
     <div class="horizontal-bar__content">
       <router-link tag="div" to="/" class="logo"> Car Park </router-link>
       <router-link to="/contact" class="contact"> Contact </router-link>
+      <!-- when user is not logged in show sign up and login buttons -->
       <div v-if="!auth">
         <router-link to="/auth/signup" class="signup"> Sign Up </router-link>
         <router-link to="/auth/login" class="login"> Login </router-link>
       </div>
       <div v-else>
+        <!-- when the user is logged in show user with username and avatar -->
         <router-link
           :to="`/users/${user.id}`"
           tag="div"
@@ -46,7 +48,6 @@ export default {
 .horizontal-bar {
   .contact {
     font-size: 1.4rem;
-    // cursor
   }
   .login {
     color: $secondary;

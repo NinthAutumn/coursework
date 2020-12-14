@@ -3,15 +3,14 @@ class PagesController < ApplicationController
   end
 
   def contact
-    # ContactMailer.contact_mail
-    # if
-    ContactMailer.with(contact_param).contact_email
+    # call on contact emailer
+    ContactMailer.with(contact_params).contact_email.deliver_now
+    render :json=>{message:'Success'}
   end
 
   private
-    def contact_param
-      params.require(:content)
-      params.require(:subject)
+    def contact_params
+      params.permit(:content,:subject)
     end
   
 end

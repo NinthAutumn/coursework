@@ -1,6 +1,7 @@
 <template>
   <div class="park-list">
     <div class="park-list__container">
+      <!-- list of parks -->
       <router-link
         tag="div"
         class="park-list__item"
@@ -9,8 +10,7 @@
         :to="`/parks/${park.id}`"
       >
         <h4>{{ park.name }}</h4>
-        <!-- <p>{{ park.description }}</p> -->
-        <img :src="park.avatar" alt="" class="park-list__cover" />
+        <img :src="park.cover" alt="" class="park-list__cover" />
       </router-link>
     </div>
   </div>
@@ -28,7 +28,7 @@ export default {
 .park-list {
   &__container {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(5rem, 32rem));
     gap: 10px;
     max-width: 100%;
   }
@@ -40,6 +40,7 @@ export default {
     flex-direction: column;
     position: relative;
     height: 25rem;
+    cursor: pointer;
   }
   h4 {
     z-index: 1;
