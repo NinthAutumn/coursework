@@ -3,6 +3,7 @@
     <div class="park-body__content">
       <h2>Parking Slots</h2>
       <ul class="park-body__slots">
+        <!-- list of park slot component -->
         <park-slot
           :park-slot="slot"
           v-for="slot in park.park_slots"

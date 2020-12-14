@@ -58,6 +58,7 @@ export default {
       this.$emit("close");
     },
     async submitHandler() {
+      //validate if the input is proper
       if (
         !parseInt(this.form.height) ||
         !parseInt(this.form.width) ||

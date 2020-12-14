@@ -19,7 +19,7 @@
             class="slot-farm__car"
             :class="{ 'slot-farm__car--selected': selected_car.id === car.id }"
             v-for="car in cars"
-            @click="selected_car = car"
+            @click.stop="selected_car = car"
             :key="car.id"
           >
             {{ car.name }}
@@ -29,7 +29,7 @@
         <div class="flex-divider">
           <div
             class="slot-farm__button button button--small button--primary button--pill"
-            @click="handleSlot"
+            @click.stop="handleSlot"
           >
             Book a Slot
           </div>
@@ -76,6 +76,7 @@ export default {
     }),
   },
   async mounted() {
+    //close modal if user is not logged in
     if (!this.auth) {
       alert("You must be logged in to book a parking slot");
       return this.$emit("close");

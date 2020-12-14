@@ -22,14 +22,14 @@
           <label>Add Park Slots</label>
           <div class="edit-park__list">
             <img
-              @click="slotModalHandler({ update: false, id: 0 })"
+              @click.stop="slotModalHandler({ update: false, id: 0 })"
               src="/assets/plus-solid.svg"
               width="20"
               height="20"
               alt=""
             />
             <div
-              @click="slotModalHandler({ update: true, pslot: slot })"
+              @click.stop="slotModalHandler({ update: true, pslot: slot })"
               class="edit-park__item"
               v-for="slot in form.park_slots"
               :key="slot.id"

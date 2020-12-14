@@ -23,7 +23,7 @@
           <!-- toggle booking slot form -->
           <div
             class="park-header__book button button--big button--primary button--pill"
-            @click="handleSlot"
+            @click.stop="handleSlot"
           >
             Book a Slot
           </div>

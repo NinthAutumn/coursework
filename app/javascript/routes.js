@@ -1,5 +1,7 @@
 import VueRouter from 'vue-router'
 
+
+//client side routes list
 const routes = [
   // { path: '/', component: ()=>import("./app") },
   {
@@ -39,11 +41,13 @@ const routes = [
     path: '/users/:id',
     component: () => import("./parts/users/_id")
   },
+  {
+    path: '*',
+    component: () => import("./parts/home")
+  },
 ]
 
-// 3. Create the router instance and pass the `routes` option
-// You can pass in additional options here, but let's
-// keep it simple for now.
+// 3. Creates the router instance and pass the `routes` option
 const router = new VueRouter({
   mode: 'history',
   routes // short for `routes: routes`

@@ -2,14 +2,15 @@ require 'jwt'
 
 module Api
   class SlotsController < ApplicationController
-    # before_action :authenticate_user,only: [:availableSlot]
     before_action :authenticate_user, only: [:update,:destroy,:create]
+
+    #GET /api/cars/:id
     def show
       car = CarParkSlot.where(park_slot_id: params[:id]).first
       render :json => car.to_json()
     end
 
-
+    #POST /api/cars
     def create
       slot = ParkSlot.new(slot_params)
       if slot.save
@@ -19,6 +20,7 @@ module Api
       end
     end
 
+    #GET /api/slots/:park_id/open
     def availableSlot
       #find available slot that doesnt have car park slot
       slot = ParkSlot.find_by_sql(["

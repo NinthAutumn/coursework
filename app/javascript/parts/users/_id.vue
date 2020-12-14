@@ -21,7 +21,7 @@
         <div class="user-show__cars">
           <!-- list of cars and when the car is selected toggle a modal that is able to edit it -->
           <div
-            @click="toggleUpdateModal(car)"
+            @click.stop="toggleUpdateModal(car)"
             class="user-show__car"
             v-for="car of cars"
             :key="car.id"

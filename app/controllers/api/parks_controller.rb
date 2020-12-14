@@ -4,8 +4,7 @@ module Api
   class ParksController < ApplicationController
     before_action :authenticate_user, only: [:update,:destroy,:create]
   
-    # GET /parks
-    # GET /parks.json
+    # GET /api/parks
     def index
       conditions = {}
       if park_list_params[:user_id].present? then
@@ -17,8 +16,7 @@ module Api
     end
     
 
-    # GET /parks/1
-    # GET /parks/1.json
+    # GET /api/parks/1
     def show
       
       # if param is simple return a simple park
@@ -48,8 +46,7 @@ module Api
 
   
   
-    # POST /parks
-    # POST /parks.json
+    # POST /api/parks
     def create
       park = Park.new(park_params)
       if park.save
@@ -59,8 +56,7 @@ module Api
       end
     end
   
-    # PATCH/PUT /parks/1
-    # PATCH/PUT /parks/1.json
+    # PATCH/PUT /api/parks/1
     def update
       park = Park.find(park_params[:id])
       #only user with the same user id as the park are able to edit the park
@@ -76,8 +72,7 @@ module Api
       end
     end
   
-    # DELETE /parks/1
-    # DELETE /parks/1.json
+    # DELETE /api/parks/1
     def destroy
 
       park = Park.find(park_params[:id])

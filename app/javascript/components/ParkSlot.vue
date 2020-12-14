@@ -1,8 +1,9 @@
 <template>
+  <!-- open parkslot bookmark if its not occupied -->
   <div
     class="park-slot"
     :class="{ 'park-slot--occupied': car }"
-    @click="car ? nothing : $emit('formOpen', parkSlot)"
+    @click.stop="car ? nothing : $emit('formOpen', parkSlot)"
   >
     {{
       car
@@ -24,8 +25,7 @@ export default {
     nothing() {},
   },
   async mounted() {
-    const res = await window.$.ajax(`/api/slots/${this.parkSlot.id}`).promise();
-    this.car = res;
+    this.car = await window.$.ajax(`/api/slots/${this.parkSlot.id}`).promise();
   },
 };
 </script>

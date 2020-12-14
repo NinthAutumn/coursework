@@ -1,19 +1,35 @@
 <template>
   <div class="car-form dialog dialog__container">
     <div class="dialog__content" v-click-outside="close">
+      <!-- prevent default form submit refreshing page and calles formhandler on submit -->
       <form @submit.prevent="formHandler">
         <h3>{{ update ? "Update" : "Create" }} Car</h3>
         <label for="name">Name</label>
-        <input name="name" v-model="form.name" type="text" class="input" />
+        <input
+          required
+          maxlength="100"
+          name="name"
+          v-model="form.name"
+          type="text"
+          class="input"
+        />
         <label for="number_plate">Number Plate</label>
         <input
           name="number_plate"
           v-model="form.number_plate"
           type="text"
           class="input"
+          required
+          maxlength="100"
         />
         <label for="brand">Brand</label>
-        <input name="brand" v-model="form.brand" type="text" class="input" />
+        <input
+          maxlength="100"
+          name="brand"
+          v-model="form.brand"
+          type="text"
+          class="input"
+        />
         <button class="button button--pill button--primary">
           {{ update ? "Update" : "Create" }}
         </button>

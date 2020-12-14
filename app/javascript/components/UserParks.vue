@@ -10,7 +10,7 @@
     <div class="user-parks__list">
       <div class="user-parks__item" v-if="auth && (user.id === id || !id)">
         <img
-          @click="$router.push('/parks/new')"
+          @click.stop="$router.push('/parks/new')"
           src="/assets/plus-solid.svg"
           alt=""
           height="100"
@@ -32,7 +32,7 @@
         >
         <button
           v-if="auth && (user.id === id || !id)"
-          @click="handleModal(park.id)"
+          @click.stop="handleModal(park.id)"
           class="button button--error button--pill"
         >
           Delete
@@ -78,6 +78,7 @@ export default {
     },
   },
   async mounted() {
+    //check if there is an id if there is it is an update
     if (this.id) {
       if (this.auth)
         await this.$store.dispatch("park/fetchUserParks", {

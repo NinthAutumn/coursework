@@ -1,5 +1,6 @@
 <template>
   <div class="card-style">
+    <!-- styled component -->
     <div
       class="card-style__container"
       :class="`card-style__container--${styled}`"

@@ -1,20 +1,24 @@
 import $ from 'jquery'
 import Cookies from 'js-cookie'
+//declares the state
 
 const state = () => ({
   park: {},
   user_parks: [],
 })
-
+//gets the state
 const getters = {
   getPark: (state) => state.park,
   getUserParks: state => state.user_parks
 }
 
+//mutates the state
 const mutations = {
   SET_PARK: (state, park) => state.park = park,
   SET_USER_PARKS: (state, parks) => state.user_parks = parks
 }
+
+//make asynchronous calls to fetch the state values
 const actions = {
   async fetchPark({
     commit

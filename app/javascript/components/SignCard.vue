@@ -8,26 +8,34 @@
           v-model="form.username"
           placeholder="Username"
           class="input"
+          maxlength="100"
           type="text"
+          required
         />
         <label for>Email</label>
         <input
           v-model="form.email"
           placeholder="Email"
+          maxlength="100"
+          required
           class="input"
           type="text"
         />
         <label for>Password</label>
         <input
           class="input"
+          required
           type="password"
           v-model="form.password"
+          maxlength="100"
           placeholder="Password"
         />
         <label for>Confirm Password</label>
         <input
           class="input"
           type="password"
+          required
+          maxlength="100"
           v-model="form.c_password"
           placeholder="Confirm Password"
         />
@@ -56,18 +64,20 @@ export default {
   }),
   methods: {
     async loginHandler(e) {
+      //validate if the password === confirm_password
       if (this.form.password !== this.form.c_password) {
+        alert("Password confirmation must be the same with password");
         return (this.error =
           "Password confirmation must be the same with password");
       }
       const { error } = await this.$store.dispatch("user/signup", this.form);
-
+      //check if there was any error
       if (error) return (this.error = error);
+      //direct user to home after success
       return this.$router.push("/");
     },
   },
   components: {
-    // ButtonCard: () => import("./Style/Button.vue"),
     CardStyle: () => import("./Style/Card.vue"),
     InputStyle: () => import("./Style/Input.vue"),
   },

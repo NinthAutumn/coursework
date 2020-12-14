@@ -1,5 +1,6 @@
 <template>
   <div class="delete-park dialog dialog__container">
+    <!--when the outside div is clicked -->
     <div
       class="dialog__content delete-park__content"
       v-click-outside="closeModal"
@@ -9,10 +10,10 @@
         <button
           style="margin-right: 1rem"
           class="button button--error"
-          @click="closeModal"
+          @click.stop="closeModal"
         >
           Cancel</button
-        ><button @click="deleteHandler" class="button button--primary">
+        ><button @click.stop="deleteHandler" class="button button--primary">
           Delete
         </button>
       </div>
@@ -32,6 +33,7 @@ export default {
   },
   methods: {
     async deleteHandler() {
+      //make ajax call to delete the park
       await window.$.ajax({
         method: "DELETE",
         url: `/api/parks/${this.id}`,
@@ -39,6 +41,8 @@ export default {
           Authorization: Cookie.get("Authorization"),
         },
       }).promise();
+
+      //if successful fetch new list of parks
 
       await this.$store.dispatch("park/fetchUserParks", {
         user_id: this.user.id,

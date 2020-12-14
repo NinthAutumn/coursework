@@ -1,5 +1,6 @@
 <template>
   <div class="login-card">
+    <!-- prevents default refreshing of the page and calls the loginhandler function on submit -->
     <form @submit.prevent="loginHandler">
       <card-style class="login-card__form">
         <h1 class="login-card__title">Login</h1>
@@ -8,13 +9,17 @@
           v-model="form.email"
           placeholder="Email"
           class="input"
+          required
           type="text"
+          maxlength="100"
         />
         <label for>Password</label>
         <input
           class="input"
           type="password"
           v-model="form.password"
+          maxlength="100"
+          required
           placeholder="Password"
         />
         <div class="flex-divider">
@@ -22,8 +27,6 @@
             Login
           </button>
           <span v-if="error">{{ error }}</span>
-          <!-- <button-card type="submit" style="margin-left: auto"
-            >Login</button-card -->
         </div>
 
         <p class="login-card__password-forgot">Forgot Password?</p>
@@ -42,6 +45,8 @@ export default {
   }),
   methods: {
     async loginHandler(e) {
+      if (this.form.email.length > 100 || this.form.password.length > 100)
+        return alert("Password or email cannot be longer than 100 characters");
       const { error } = await this.$store.dispatch("user/login", this.form);
 
       if (error) return (this.error = error);
