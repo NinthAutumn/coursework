@@ -1,18 +1,19 @@
 import Cookies from 'js-cookie'
 import $ from 'jquery'
-// const $ = require('jquery');
+
+//declares the state
 const state = () => ({
   auth: {},
   loggedIn: false,
   user: {}
 })
-
+//gets the state
 const getters = {
   isAuth: state => state.loggedIn,
   getAuth: state => state.auth,
   getUser: state => state.user
 }
-
+//mutates the state
 const mutations = {
   SET_AUTH(state, data) {
     state.auth = data;
@@ -20,6 +21,7 @@ const mutations = {
   },
   SET_USER: (state, user) => state.user = user
 }
+//ajax request 
 const actions = {
   async fetchUserSelf({
     commit
