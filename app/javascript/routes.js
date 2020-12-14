@@ -13,10 +13,6 @@ const routes = [
     component: () => import("./parts/contact")
   },
   {
-    path: '/parks',
-    component: () => import("./parts/parks")
-  },
-  {
     path: '/parks/new',
     component: () => import("./parts/parks/new")
   },
